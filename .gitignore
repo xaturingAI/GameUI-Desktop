@@ -1,0 +1,1 @@
+Nothing should be ignored. The changes only include source code files (.odin files) which are the main project files and should be tracked in version control. No build artifacts, dependencies, or temporary files are present in the change list.

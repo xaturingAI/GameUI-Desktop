@@ -1,6 +1,16 @@
 package game_desktop
 
+import "core:fmt"
 import "core:os"
+import "core:strings"
+
+AppInfo :: struct {
+	id: string,
+	name: string,
+	icon: string,
+	exec: string,
+	categories: []string,
+}
 
 XDG_DIRS :: proc() -> []string {
 	home := os.get_env("HOME")
@@ -89,8 +99,28 @@ ParseDesktopFile :: proc(path: string) -> AppInfo {
 		return info
 	}
 	
-	lines := []string{}
 	info.id = path
+	
+	lines := strings.split(content, "\n")
+	defer delete(lines)
+	
+	for line in lines {
+		line = strings.trim_space(line)
+		if strings.has_prefix(line, "#") || line == "" {
+			continue
+		}
+		
+		if strings.has_prefix(line, "Name=") {
+			info.name = strings.trim_space(strings.slice_to(line, "="))
+		} else if strings.has_prefix(line, "Exec=") {
+			info.exec = strings.trim_space(strings.slice_to(line, "="))
+		} else if strings.has_prefix(line, "Icon=") {
+			info.icon = strings.trim_space(strings.slice_to(line, "="))
+		} else if strings.has_prefix(line, "Categories=") {
+			cats := strings.trim_space(strings.slice_to(line, "="))
+			info.categories = strings.split(cats, ";")
+		}
+	}
 	
 	return info
 }

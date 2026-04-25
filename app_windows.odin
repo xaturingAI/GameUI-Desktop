@@ -20,6 +20,7 @@ WindowPane :: struct {
     rotation_3d: camera.Vec2,
     distance: f32,
     visible: bool,
+    closed: bool,
 }
 
 CreateWindowPane :: proc(title: string, x, y, width, height: int, r, g, b: u8) -> WindowPane {
@@ -32,6 +33,7 @@ CreateWindowPane :: proc(title: string, x, y, width, height: int, r, g, b: u8) -
         rotation_3d = camera.Vec2{0, 0},
         distance = 3.0,
         visible = true,
+        closed = false,
     }
 }
 
@@ -45,6 +47,7 @@ CreateWindowPane3D :: proc(title: string, pos: camera.Vec3, dist: f32) -> Window
         rotation_3d = camera.Vec2{0, 0},
         distance = dist,
         visible = true,
+        closed = false,
     }
 }
 
