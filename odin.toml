@@ -1,0 +1,19 @@
+[package]
+name = "GameUI-Desktop"
+version = "0.1.0"
+authors = ["xaturingAI"]
+description = "A Wayland-friendly Linux desktop environment prototype written in Odin with 3D Vulkan rendering."
+license = "GPL3"
+
+[build]
+main = "main.odin"
+output = "GameUI-Desktop"
+
+[dependencies]
+vendor:sdl2 = "*"
+vendor:sdl2/ttf = "*"
+vendor:sdl2/image = "*"
+vendor:sdl2/mixer = "*"
+
+[options]
+disable-optimizer = false
