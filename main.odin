@@ -158,11 +158,11 @@ DrawMMOOverlay :: proc(renderer: ^sdl.Renderer, font: ^sdl_ttf.Font, settingsSta
     DrawActionBar(renderer, font, 120, ScreenHeight - 122, ScreenWidth - 260, 96, []string{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"})
 }
 
-DrawDesktop :: proc(renderer: ^sdl.Renderer, font: ^sdl_ttf.Font, shellState: desktop_shell.DesktopShellState, planes: []planes.Plane, activePlane: int, launcher: launcher.AppLauncher, settingsState: settings.SettingsState, worldState: world.WorldState, modelManager: models.ModelManager, editorState: model_editor.ModelEditorState, camState: camera.Camera) {
+DrawDesktop :: proc(renderer: ^sdl.Renderer, font: ^sdl_ttf.Font, shellState: desktop_shell.DesktopShellState, planes: []planes.Plane, activePlane: int, launcher: launcher.AppLauncher, settingsState: settings.SettingsState, worldState: world.WorldState, modelManager: models.ModelManager, editorState: model_editor.ModelEditorState, camState: camera.Camera, lightingState: lighting.LightingState) {
     bgR, bgG, bgB, panelR, panelG, panelB := GetThemeColors(settingsState.theme)
 
     fullScreenActive := desktop_shell.AnyFullScreenOpen(shellState)
-    world.DrawDesktopBackground(renderer, font, settingsState.background_mode, fullScreenActive, ScreenWidth, ScreenHeight, worldState, modelManager)
+    world.DrawDesktopBackground(renderer, font, settingsState.background_mode, fullScreenActive, ScreenWidth, ScreenHeight, worldState, modelManager, lightingState)
 
     DrawRect(renderer, 0, 0, 84, ScreenHeight, 14, 20, 36, 220)
     DrawRect(renderer, 32, 12, 118, 32, 36, 52, 92, 255)
@@ -606,7 +606,7 @@ main :: proc() -> int {
         sdl.set_render_draw_color(renderer, 14, 24, 44, 255)
         sdl.render_clear(renderer)
 
-        DrawDesktop(renderer, font, shellState, planesList, selectedPlane, launcherPanel, settingsPanel, worldState, modelManager, editorState, cameraState)
+        DrawDesktop(renderer, font, shellState, planesList, selectedPlane, launcherPanel, settingsPanel, worldState, modelManager, editorState, cameraState, lightingState)
         
         DrawRect(renderer, 16, 16, 260, 82, 20, 26, 40, 200)
         DrawTextOrPlaceholder(renderer, font, "3D Camera", 24, 24)
